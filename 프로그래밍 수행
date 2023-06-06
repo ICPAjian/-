@@ -1,0 +1,59 @@
+import pygame
+import numpy as np
+
+# 게임 윈도우 크기 설정
+WIDTH, HEIGHT = 800, 600
+WIN = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption("Fluid Flow Simulation")
+
+# 유체 속성 및 시뮬레이션 매개변수
+DENSITY = 1.0  # 유체 농도
+VISCOSITY = 0.1  # 점성도
+dt = 0.1  # 시간 단계 크기
+
+# 그리드 크기와 셀 크기 설정
+N = 50  # 그리드 크기
+SIZE = WIDTH // N  # 셀 크기
+
+# 유체 속도 및 농도 배열 초기화
+u = np.zeros((N, N))
+v = np.zeros((N, N))
+density = np.zeros((N, N))
+
+def simulate_step():
+    global u, v, density
+
+    # 속도와 농도를 업데이트하는 로직 구현
+    # ...
+
+def draw_cells():
+    for i in range(N):
+        for j in range(N):
+            # 유체 농도에 따라 셀 색상 결정
+            color = (int(density[i, j] * 255), 0, 0)
+            rect = pygame.Rect(i * SIZE, j * SIZE, SIZE, SIZE)
+            pygame.draw.rect(WIN, color, rect)
+
+def main():
+    clock = pygame.time.Clock()
+
+    running = True
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+
+        # 게임 로직 업데이트
+        simulate_step()
+
+        # 화면 그리기
+        WIN.fill((255, 255, 255))  # 배경색 설정
+        draw_cells()
+        pygame.display.update()
+
+        clock.tick(60)
+
+    pygame.quit()
+
+if __name__ == "__main__":
+    main()
